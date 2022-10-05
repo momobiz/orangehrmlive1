@@ -14,6 +14,8 @@ public class LoginPage extends BasePage{
 	WebElement passwordInput;
 	@FindBy(xpath="//button[@type='submit']")
 	WebElement loginButton;
+	@FindBy(xpath="//p[@class='oxd-text oxd-text--p oxd-alert-content-text']")
+	WebElement invalidCredentialMessage;
 
 	public LoginPage() {
 		PageFactory.initElements(driver, this);
@@ -34,6 +36,22 @@ public class LoginPage extends BasePage{
 		clickOn(loginButton);
 		
 	}
+	
+	public String getWarningMessage() {
+		String warningMessage="No message";
+		try {
+			if(isDispayed(invalidCredentialMessage)) {
+				warningMessage=invalidCredentialMessage.getAttribute("innerHTML");
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return warningMessage;
+		
+	
+	}
+
 	
 
 }

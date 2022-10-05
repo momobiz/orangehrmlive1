@@ -39,6 +39,8 @@ public abstract class BasePage {
 	public static void launchBrowser() {
 		WebDriverManager.chromedriver().setup();
 		driver=new ChromeDriver();
+		// When we use different browsers
+		//driver=WebDriverManager.getInstance(props.getProperty("browser")).create();
 		props=readConfigFile();
 		driver.get(props.getProperty("url"));
 		driver.manage().window().maximize();
