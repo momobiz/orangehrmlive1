@@ -16,6 +16,7 @@ public class LoginSteps extends BaseSteps {
 	public void user_is_on_the_login_page() {
 		loginPage=new LoginPage();
 		
+		
 	    
 	}
 

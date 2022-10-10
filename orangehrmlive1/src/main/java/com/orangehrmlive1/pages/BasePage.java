@@ -15,13 +15,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.orangehrmlive1.utils.MyWebDriverListener;
 
-
+import atu.testrecorder.ATUTestRecorder;
+import atu.testrecorder.exceptions.ATUTestRecorderException;
+import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
+
+
 
 public abstract class BasePage {
 	
@@ -32,6 +38,10 @@ public abstract class BasePage {
 	public JavascriptExecutor js;
 	public Select select;
 	public static Properties props=new Properties();
+	public static ATUTestRecorder record;
+	public static Scenario scenario;
+	public static MyWebDriverListener myWebDriverListener;
+    public static EventFiringWebDriver e_driver;
 	
 	
 	
@@ -41,6 +51,13 @@ public abstract class BasePage {
 		driver=new ChromeDriver();
 		// When we use different browsers
 		//driver=WebDriverManager.getInstance(props.getProperty("browser")).create();
+		
+		// **********Adding webDriver Listener **********************
+//		e_driver=new EventFiringWebDriver(driver);
+//		myWebDriverListener=new MyWebDriverListener();
+//		e_driver.register(myWebDriverListener);
+//		driver=e_driver;
+		
 		props=readConfigFile();
 		driver.get(props.getProperty("url"));
 		driver.manage().window().maximize();
@@ -104,6 +121,14 @@ public abstract class BasePage {
 	
 	public static void closeWindow() {
 		driver.quit();
+	}
+	
+	public static void startVideoRecording(String str) throws ATUTestRecorderException {
+		record=new ATUTestRecorder("target/videos", str, false);
+		record.start();
+	}
+	public static void stopVideoRecording() throws ATUTestRecorderException {
+		record.stop();
 	}
 
 	
